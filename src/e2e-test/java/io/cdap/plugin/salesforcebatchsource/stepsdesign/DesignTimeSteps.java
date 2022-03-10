@@ -16,15 +16,20 @@
 
 package io.cdap.plugin.salesforcebatchsource.stepsdesign;
 
+import io.cdap.e2e.pages.actions.CdfPluginPropertiesActions;
 import io.cdap.e2e.utils.CdfHelper;
 import io.cdap.plugin.salesforcebatchsource.actions.SalesforcePropertiesPageActions;
 import io.cdap.plugin.utils.SchemaTable;
 import io.cdap.plugin.utils.enums.SOQLQueryType;
 import io.cdap.plugin.utils.enums.SObjects;
 import io.cdap.plugin.utils.enums.SalesforceBatchSourceProperty;
+import io.cdap.plugin.utils.enums.SalesforceSinkProperty;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.apache.commons.lang3.RandomStringUtils;
+
+import java.io.IOException;
 
 /**
  * Design-time steps of Salesforce plugins.
@@ -131,5 +136,45 @@ public class DesignTimeSteps implements CdfHelper {
   @Then("verify validation message for invalid SObject name")
   public void verifyValidationMessageForInvalidSObjectName() {
     SalesforcePropertiesPageActions.verifyValidationMessageForInvalidSObjectName(invalidSobjectName);
+  }
+
+  //Edited
+  @And("fill Dataset name")
+  public void fillDatasetNameAs() {
+    SalesforcePropertiesPageActions.fillDatasetInSink();
+
+  }
+
+  @And("fill Table name")
+  public void fillTableNameAs() {
+    SalesforcePropertiesPageActions.fillTabelName();
+
+  }
+
+  @And("Close the Plugin Properties Page")
+  public void closeThePluginPropertiesPage() {
+    SalesforcePropertiesPageActions.closePluginPropertiesPage();
+  }
+
+  @And("fill the ProjectID")
+  public void fillTheProjectID() throws IOException {
+    SalesforcePropertiesPageActions.fillProjectId();
+  }
+
+  @And("fill the Service Account File path")
+  public void fillServiceAccountFilePath() throws IOException, InterruptedException {
+    SalesforcePropertiesPageActions.fillFilePath();
+  }
+
+  @And("fill Last modified After and before")
+  public void fillLastModifiedAfterAndBefore() {
+
+    SalesforcePropertiesPageActions.fillLastModifyAfter();
+  }
+
+  @And("click on sink plugin preview data")
+  public void openSinkPluginPreviewData() {
+    SalesforcePropertiesPageActions.openPluginPreviewdata();
+
   }
 }

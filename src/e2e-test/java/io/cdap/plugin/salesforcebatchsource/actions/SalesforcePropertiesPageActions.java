@@ -17,10 +17,10 @@
 package io.cdap.plugin.salesforcebatchsource.actions;
 
 import io.cdap.cdap.api.data.schema.Schema;
-import io.cdap.e2e.utils.AssertionHelper;
-import io.cdap.e2e.utils.PluginPropertyUtils;
-import io.cdap.e2e.utils.SeleniumHelper;
-import io.cdap.e2e.utils.WaitHelper;
+import io.cdap.e2e.pages.actions.CdfBigQueryPropertiesActions;
+import io.cdap.e2e.pages.actions.CdfPluginPropertiesActions;
+import io.cdap.e2e.pages.locators.CdfBigQueryPropertiesLocators;
+import io.cdap.e2e.utils.*;
 import io.cdap.plugin.salesforce.authenticator.AuthenticatorCredentials;
 import io.cdap.plugin.salesforce.plugin.source.batch.SalesforceBatchSource;
 import io.cdap.plugin.salesforce.plugin.source.batch.SalesforceSourceConfig;
@@ -37,6 +37,7 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -115,7 +116,7 @@ public class SalesforcePropertiesPageActions {
     logger.info("Click on the Validate button");
     SalesforcePropertiesPage.validateButton.click();
     WaitHelper.waitForElementToBeDisplayed(SalesforcePropertiesPage.loadingSpinnerOnValidateButton);
-    WaitHelper.waitForElementToBeHidden(SalesforcePropertiesPage.loadingSpinnerOnValidateButton);
+    //WaitHelper.waitForElementToBeHidden(SalesforcePropertiesPage.loadingSpinnerOnValidateButton);
     WaitHelper.waitForElementToBeDisplayed(SalesforcePropertiesPage.validateButton);
   }
 
@@ -260,5 +261,53 @@ public class SalesforcePropertiesPageActions {
     String expectedValidationMessage = PluginPropertyUtils.errorProp(
       "invalid.sobjectname.error") + " '" + invalidSObjectName + "''";
     verifyErrorMessageOnHeader(expectedValidationMessage);
+  }
+
+
+  //changes
+  public static void fillDatasetInSink() {
+    String datasetName = "Dataset" + RandomStringUtils.randomAlphanumeric(7);
+    CdfBigQueryPropertiesActions.enterBigQueryDataset(datasetName);
+  }
+
+
+  public static void fillTabelName() {
+    String tabelName = "Tablename" + RandomStringUtils.randomAlphanumeric(7);
+    CdfBigQueryPropertiesActions.enterBigQueryTable(tabelName);
+
+  }
+
+  public static void fillProjectId() throws IOException {
+    String projectId = PluginPropertyUtils.pluginProp("sink.projectid");
+    CdfBigQueryPropertiesActions.enterProjectId(projectId);
+
+  }
+
+
+  public static void fillFilePath() throws IOException, InterruptedException {
+
+    String json = "{   \"type\": \"service_account\",   \"project_id\": \"cdf-entcon\",   \"private_key_id\": \"9ebcaa5065f022988ea24454b188868020861bb5\",   \"private_key\": \"-----BEGIN PRIVATE KEY-----\\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCBZl6GRj2hnU41\\ne+dv7BkkzQ1aFjt1CywNJF1w62OXqZZ8poZK2Xqz2UlGlL/b8Dpb9LPoks1SNEKT\\nUGTpYYI48Mysgy2fYhXUO4KVhQ5vimbhgBEJwBTUg2lLmnuYg3sRhASuJJqR38yH\\nSos534/GuBalVQTMNRk+K8PTg6MlsAqTyThAmuFrvgJu6AxLFVwZgK35Zy/d3wRf\\n95KYHJzeCjTGxPgEDOb4qEGvVBb/1LVpWYliObBIV/k6bIIWGC+kxp0E6OKGw1Bb\\nS3raAenpWUrWb6xX2dN/3ASw3atuEQnNT4Xes5vb0MFLaWADYUiU4wKQuW0VfTD+\\niqCJ/SLnAgMBAAECggEAJwYs5pjDWHyczANwgi/1S0RtzOfciYlTgSkg5v+OOvxh\\njnkYEfWxjBCxCRCuJdG2f+n14eN3+V0aYNwDeuC1yZ9RUouDFEib5bQGxznn5xqZ\\nuVMKkGK1xXtWI39U2+N3F4q1cKFIXkrcn0aLY2o5LYhyB+1yc3VmBfpj5eOSrbgS\\nSNkpu+twk9lvTlEVxMMicvCKbFE/VREXS+pjTA+eY7XmmtAMRF8KBrGZ4/nsvUuL\\nLX1AkE5Raehn57PyLWSnHWWXWT+8P68UQ2hmrTEs11AQ5ncny5dW9ZqNbrKXoT+W\\n0aG/WEn0yL19gCqLRyEqObYHCigHTBUfTmvF2Z1VuQKBgQC2VzD0RxPjMyjV1xXH\\nDL6fHe4jAB0tiUA9y/QbF8ZjMWZ1A63Pl+iCf5bAU6fk3VO0flQCkXl+hWkjuF7s\\nZC7JjTooGCtx/SmihM14q5Nyzdkr6DZfZV5Ua5cf9HIVuRHXCYUhc74A+H2z8FeS\\neu7IMD8YTnVsp6PelZm1KlkVyQKBgQC1rExHTWzL74R0+z1kphvxqoWuy7n2VRtf\\nyxx0t5mNmI86a20E42Rac32cxWZirY73fPpZEP8sUy/80u/d401Gifzp7UoVo0ZA\\nqUkq6nO/3KL60YvWTIh0advzpckQucELdsl6umFcz32Vyf6LDvW7WR2iEnT+w2UU\\nvGf0vV6LLwKBgDgoMlOJcH6QywrQ60waiLrIpQbyign0M2zU26FceSUjmcKAF4/P\\n4TQPx4YEPbkm0RjNr2H7G8fznqX5qoJzeFVqwXaHuxmoNqJu9Dkt3oOFElWLdvN6\\nbMrjN/AHgPtfvDbWH8JluybhYRWB9/aNFe1hroz13QRRvQ5YVLaPDFDBAoGAOoHc\\npvHmYd8nN01aPjnIshGKr/poT06lXDpbVbNzPkith9Dk8TgSL5cWExD3ojvm2Qlk\\nzp5Mr4ey4qdEHJ+BWYBC9Us4GrPUgiqCp9GNqXJzAnfNoxxOrb8R2OvBTyOjaf+9\\nb0rq5CrmdQDyevI8bTOL+ZAcIZfny7/JcuYxtn0CgYAxBN4jnJyzLfyaAB5PKlWd\\n6XA9w0OkYTguuRq14ZN+uQ8RyOmZG4OspPIZ/8eh2LJi35I0CSV4i8ZkHewTcXqW\\n2bTuYwoHCDJpuRqGZ/onzA8DWhwfs5dQW7r9QTtL4E+HbrReddqUQMcRHyUldV5H\\nS3TuezJQrTo4vN1yUtgA/Q==\\n-----END PRIVATE KEY-----\\n\",   \"client_email\": \"cdf-ent-con-sf@cdf-entcon.iam.gserviceaccount.com\",   \"client_id\": \"109233043269964188972\",   \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",   \"token_uri\": \"https://oauth2.googleapis.com/token\",   \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",   \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/cdf-ent-con-sf%40cdf-entcon.iam.gserviceaccount.com\" }\n";
+
+    //String filePath = PluginPropertyUtils.pluginProp("sink.serviceaccount.filepath");
+
+    //Created a new method which click on the json radio button and pass json properties
+    CdfBigQueryPropertiesActions.enterAccountJson(json);
+  }
+
+  public static void fillLastModifyAfter() {
+    String lastModifyafter = "2022-03-08T00:00:00Z";
+    String lastModifyBefore = "2021-11-13T00:00:00Z";
+    SalesforcePropertiesPage.lastModifiedAfterInput.sendKeys(lastModifyafter);
+    //SalesforcePropertiesPage.lastModifiedBeforeInput.sendKeys(lastModifyBefore);
+
+  }
+
+  public static void openPluginPreviewdata() {
+    String pluginName = "BigQuery";
+    CdfHelper.openSinkPluginPreviewData(pluginName);
+  }
+
+  public static void closePluginPropertiesPage() {
+    CdfPluginPropertiesActions.clickCloseButton();
   }
 }

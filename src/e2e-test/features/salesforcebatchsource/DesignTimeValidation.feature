@@ -20,8 +20,8 @@ Feature: Salesforce Batch Source - Design time - validation scenarios
   @BATCH-TS-SF-DSGN-02
   Scenario: Verify required fields missing validation for 'Reference Name' property
     When Open Datafusion Project to configure pipeline
-    And Select data pipeline type as 'Data Pipeline - Batch'
-    And Select plugin: "Salesforce" from the plugins list
+    And Select data pipeline type as: "Batch"
+    And Select plugin: "Salesforce" from the plugins list as: "Source"
     And Navigate to the properties page of plugin: "Salesforce"
     And click on the Validate button
     Then verify required fields missing validation message for Reference Name property
