@@ -22,8 +22,6 @@ import io.cdap.plugin.salesforcebatchsource.actions.SalesforcePropertiesPageActi
 import io.cdap.plugin.utils.SchemaTable;
 import io.cdap.plugin.utils.enums.SOQLQueryType;
 import io.cdap.plugin.utils.enums.SObjects;
-import io.cdap.plugin.utils.enums.SalesforceBatchSourceProperty;
-import io.cdap.plugin.utils.enums.SalesforceSinkProperty;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -58,24 +56,9 @@ public class DesignTimeSteps implements CdfHelper {
     SalesforcePropertiesPageActions.configureSalesforcePluginForSoqlQuery(SOQLQueryType.valueOf(queryType));
   }
 
-  @When("click on the Get Schema button")
-  public void clickOnGetSchemaButton() {
-    SalesforcePropertiesPageActions.clickOnGetSchemaButton();
-  }
-
   @When("configure Salesforce source for an SObject Query of SObject: {string}")
   public void configureSalesforceForSObjectQuery(String sObjectName) {
     SalesforcePropertiesPageActions.configureSalesforcePluginForSObjectQuery(SObjects.valueOf(sObjectName));
-  }
-
-  @When("click on the Validate button")
-  public void clickOnValidateButton() {
-    SalesforcePropertiesPageActions.clickOnValidateButton();
-  }
-
-  @Then("verify No errors found success message")
-  public void verifyNoErrorsFoundSuccessMessage() {
-    SalesforcePropertiesPageActions.verifyNoErrorsFoundSuccessMessage();
   }
 
   @Then("verify the Output Schema table for an SOQL query of type: {string}")
@@ -97,35 +80,9 @@ public class DesignTimeSteps implements CdfHelper {
     SalesforcePropertiesPageActions.clickOnClosePropertiesPageButton();
   }
 
-  @Then("verify required fields missing validation message for Reference Name property")
-  public void verifyRequiredFieldsMissingValidationMessageForReferenceName() {
-    SalesforcePropertiesPageActions.verifyRequiredFieldsMissingValidationMessage(
-      SalesforceBatchSourceProperty.REFERENCE_NAME);
-  }
-
-  @Then("verify validation message for blank Authentication properties")
-  public void verifyValidationMessageForBlankAuthenticationProperties() {
-    SalesforcePropertiesPageActions.verifyValidationMessageForBlankAuthenticationProperty();
-  }
-
-  @Then("verify validation message for invalid Authentication properties")
-  public void verifyValidationMessageForInvalidAuthenticationProperties() {
-    SalesforcePropertiesPageActions.verifyValidationMessageForInvalidAuthenticationProperty();
-  }
-
-  @Then("verify validation message for missing SOQL or SObject Name property")
-  public void verifyValidationMessageForMissingSoqlOrSobjectNameProperty() {
-    SalesforcePropertiesPageActions.verifyValidationMessageForMissingSoqlOrSobjectNameProperty();
-  }
-
   @When("fill SOQL Query field with a Star Query")
   public void fillSoqlQueryFieldWithStarQuery() {
     SalesforcePropertiesPageActions.fillSOQLPropertyField(SOQLQueryType.STAR);
-  }
-
-  @Then("verify validation message for invalid soql query with Star")
-  public void verifyInvalidSoqlQueryErrorMessageForStarQueries() {
-    SalesforcePropertiesPageActions.verifyInvalidSoqlQueryErrorMessageForStarQueries();
   }
 
   @When("fill SObject Name property with an invalid value")
@@ -133,22 +90,14 @@ public class DesignTimeSteps implements CdfHelper {
     SalesforcePropertiesPageActions.fillSObjectName(invalidSobjectName);
   }
 
-  @Then("verify validation message for invalid SObject name")
-  public void verifyValidationMessageForInvalidSObjectName() {
-    SalesforcePropertiesPageActions.verifyValidationMessageForInvalidSObjectName(invalidSobjectName);
-  }
-
-  //Edited
   @And("fill Dataset name")
   public void fillDatasetNameAs() {
     SalesforcePropertiesPageActions.fillDatasetInSink();
-
   }
 
   @And("fill Table name")
   public void fillTableNameAs() {
     SalesforcePropertiesPageActions.fillTabelName();
-
   }
 
   @And("Close the Plugin Properties Page")
@@ -161,20 +110,23 @@ public class DesignTimeSteps implements CdfHelper {
     SalesforcePropertiesPageActions.fillProjectId();
   }
 
-  @And("fill the Service Account File path")
+  @And("fill the Service Account Json")
   public void fillServiceAccountFilePath() throws IOException, InterruptedException {
-    SalesforcePropertiesPageActions.fillFilePath();
+    SalesforcePropertiesPageActions.fillJson();
   }
 
-  @And("fill Last modified After and before")
-  public void fillLastModifiedAfterAndBefore() {
+  @And("click on preview data of sink: {string}")
+  public void openSinkPluginPreviewData(String sinkName) {
+    //SalesforcePropertiesPageActions.openPluginPreviewdata(sinkName);
 
-    SalesforcePropertiesPageActions.fillLastModifyAfter();
   }
 
-  @And("click on sink plugin preview data")
-  public void openSinkPluginPreviewData() {
-    SalesforcePropertiesPageActions.openPluginPreviewdata();
-
+  @And("fill Last modified After in format: yyyy-MM-ddThh:mm:ssZ: {string}")
+  public void fillLastModifiedAfterInFormatYyyyMMDdThhMmSsZ(String lastModifiedAfterLocation) {
+    SalesforcePropertiesPageActions.fillLastModifyAfter(lastModifiedAfterLocation);
+  }
+  @And("then click on preview and configure")
+  public void thenClickOnPreviewAndConfigure() {
+    SalesforcePropertiesPageActions.clickPreviewAndConfigure();
   }
 }

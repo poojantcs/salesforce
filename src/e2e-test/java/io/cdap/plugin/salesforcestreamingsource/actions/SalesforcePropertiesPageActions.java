@@ -16,24 +16,17 @@
 
 package io.cdap.plugin.salesforcestreamingsource.actions;
 
-import io.cdap.e2e.utils.AssertionHelper;
+import io.cdap.e2e.utils.ElementHelper;
 import io.cdap.e2e.utils.SeleniumHelper;
 import io.cdap.plugin.salesforcestreamingsource.locators.SalesforcePropertiesPage;
 import io.cdap.plugin.utils.enums.SOQLQueryType;
-import io.cdap.plugin.utils.enums.SalesforceStreamingSourceProperty;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.List;
 
 /**
  * Salesforce source plugins - Actions.
  */
 public class SalesforcePropertiesPageActions {
-    private static final Logger logger = LoggerFactory.getLogger
-            (io.cdap.plugin.salesforcestreamingsource.actions.SalesforcePropertiesPageActions.class);
 
     static {
         SeleniumHelper.getPropertiesLocators(SalesforcePropertiesPage.class);
@@ -41,13 +34,12 @@ public class SalesforcePropertiesPageActions {
 
 
     public static void fillReferenceName(String referenceName) {
-        logger.info("Fill Reference name: " + referenceName);
-        SalesforcePropertiesPage.referenceInput.sendKeys(referenceName);
+        ElementHelper.sendKeys(SalesforcePropertiesPage.referenceInput, referenceName);
     }
 
 
     private static void fillTopicName(String topicName) {
-        SalesforcePropertiesPage.topicnameInput.sendKeys(topicName);
+        ElementHelper.sendKeys(SalesforcePropertiesPage.topicnameInput, topicName);
     }
 
 
@@ -59,47 +51,29 @@ public class SalesforcePropertiesPageActions {
     }
 
     public static void fillSOQLPropertyField(SOQLQueryType queryType) {
-        logger.info("Fill SOQL Query field for Type: " + queryType + " using the Query: " + queryType.query);
         SalesforcePropertiesPage.topicqueryInput.sendKeys(queryType.query);
     }
 
     public static void configureSalesforcePluginForPushTopicQuery(SOQLQueryType queryType) {
-        String referenceName = "TestSF" + RandomStringUtils.randomAlphanumeric(7);
-        fillReferenceName(referenceName);
         fillSOQLPropertyField(queryType);
     }
 
     public static void selectNotifyOnCreateOption(String onCreateOption) {
-        SalesforcePropertiesPage.notifyoncreateDropdown.click();
-        SalesforcePropertiesPage.getDropdownOptionElement(onCreateOption).click();
-
+        ElementHelper.selectDropdownOption(SalesforcePropertiesPage.notifyoncreateDropdown, onCreateOption);
     }
 
     public static void selectNotifyOnUpdateOption(String onUpdateOption) {
-        SalesforcePropertiesPage.notifyonupdateDropdown.click();
-        SalesforcePropertiesPage.getDropdownOptionElement(onUpdateOption).click();
-
+        ElementHelper.selectDropdownOption(SalesforcePropertiesPage.notifyonupdateDropdown, onUpdateOption);
     }
 
     public static void selectNotifyOnDeleteOption(String onDeleteOption) {
-        SalesforcePropertiesPage.notifyonDeleteDropdown.click();
-        SalesforcePropertiesPage.getDropdownOptionElement(onDeleteOption).click();
-
+        ElementHelper.selectDropdownOption(SalesforcePropertiesPage.notifyonDeleteDropdown, onDeleteOption);
     }
 
     public static void selectNotifyForFieldOption(String forFieldOption) {
-        SalesforcePropertiesPage.notifyForFieldsDropdown.click();
-        SalesforcePropertiesPage.getDropdownOptionElement(forFieldOption).click();
-
+        ElementHelper.selectDropdownOption(SalesforcePropertiesPage.notifyForFieldsDropdown, forFieldOption);
     }
 
-    public static void verifyRequiredFieldsMissingValidationMessage(SalesforceStreamingSourceProperty propertyName) {
-
-        WebElement element =SalesforcePropertiesPage.getPropertyInlineErrorMessage(propertyName);
-
-        AssertionHelper.verifyElementDisplayed(element);
-        AssertionHelper.verifyElementContainsText(element, propertyName.propertyMissingValidationMessage);
-    }
 }
 
 

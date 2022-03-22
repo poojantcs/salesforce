@@ -16,9 +16,12 @@
 
 
 package io.cdap.plugin.salesforcesink.stepsdesign;
+import io.cdap.e2e.utils.PluginPropertyUtils;
 import io.cdap.plugin.salesforce.plugin.source.batch.SalesforceWideRecordReader;
 import io.cdap.plugin.salesforcesink.actions.SalesforcePropertiesPageActions;
-import io.cdap.plugin.utils.enums.*;
+import io.cdap.plugin.utils.enums.ErrorHandlingOptions;
+import io.cdap.plugin.utils.enums.OperationTypes;
+import io.cdap.plugin.utils.enums.SObjects;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 
@@ -27,8 +30,9 @@ import io.cucumber.java.en.Then;
  */
 public class DesignTimeSteps {
 
-String INVALID_MAX_RECORDS = "1000000";
-String INVALID_MAX_BYTES = "1000000000";
+String invalidMaxRecords = "1000000";
+String invalidMaxBytes = "1000000000";
+String invalidsObjectName = "abcdef";
 
     @And("configure Salesforce sink for an SobjectName: {string}")
     public void configureSalesforceSinkForSobjectName(String sObjectName) {
@@ -36,53 +40,29 @@ String INVALID_MAX_BYTES = "1000000000";
                 .configureSalesforcePluginForSobjectName(SObjects.valueOf(sObjectName));
     }
 
-    @And("I Select option type for error handling as {}")
+    @And("then Select option type for error handling as {}")
     public void selectOptionTypeForErrorHandling(ErrorHandlingOptions option) {
         SalesforcePropertiesPageActions.selectErrorHandlingOptionType(option.value);
     }
 
-    @Then("I select operation type as {}")
+    @Then("then select operation type as {}")
     public void selectOperationType(OperationTypes operationType) {
         SalesforcePropertiesPageActions.selectOperationType(operationType.value);
 
     }
 
-    @And("I select max Records Per Batch as: {string}")
-    public void selectMaxRecordsPerBatchAs(String maxRecordsPerBatch) {
-        SalesforcePropertiesPageActions.selectMaxRecords(maxRecordsPerBatch);
+    @And("fill max Records Per Batch as: {string}")
+    public void fillMaxRecordsPerBatch(String maxRecordsPerBatch) {
+        SalesforcePropertiesPageActions.fillMaxRecords(PluginPropertyUtils.pluginProp(maxRecordsPerBatch));
     }
 
-    @And("I select max Bytes Per Batch as: {string}")
-    public void SelectMaxBytesPerBatchAs(String maxBytesPerBatch) {
-        SalesforcePropertiesPageActions.selectMaxBytes(maxBytesPerBatch);
+    @And("fill max Bytes Per Batch as: {string}")
+    public void fillMaxBytesPerBatch(String maxBytesPerBatch) {
+        SalesforcePropertiesPageActions.fillMaxBytes(maxBytesPerBatch);
     }
 
-    @Then("verify required fields missing validation message for Sobject Name property")
-    public void verifyRequiredFieldsMissingValidationMessageForSobjectNameProperty() {
-        SalesforcePropertiesPageActions.verifyRequiredFieldsMissingValidationMessage(
-        SalesforceSinkProperty.SOBJECT_NAME);
+    @And("fill SObject Name property in Sink with an invalid value")
+    public void fillSObjectNamePropertyInSinkWithAnInvalidValue() {
+        SalesforcePropertiesPageActions.fillsObjectName(invalidsObjectName);
     }
-
-    @Then("verify validation message for invalid Max Records Per Batch")
-    public void verifyValidationMessageForInvalidMaxRecordsPerBatch() {
-        SalesforcePropertiesPageActions.verifyInvalidMaxRecordsValidationmessage(
-        SalesforceSinkProperty.MAXRECORDS_PER_BATCH);
-    }
-
-    @And("fill invalid max records per batch")
-    public void fillInvalidMaxRecordsPerBatch() {
-        SalesforcePropertiesPageActions.fillInvalidMaxRecords(INVALID_MAX_RECORDS);
-    }
-
-    @And("fill invalid max Bytes per batch")
-    public void fillInvalidMaxBytesPerBatch() {
-        SalesforcePropertiesPageActions.fillInvalidMaxBytes(INVALID_MAX_BYTES);
-    }
-
-    @Then("verify validation message for invalid Max Bytes Per Batch")
-    public void verifyValidationMessageForInvalidMaxBytesPerBatch() {
-        SalesforcePropertiesPageActions.verifyInvalidMaxBytesValidationmessage(
-                SalesforceSinkProperty.MAXBYTES_PER_BATCH);
-    }
-
 }

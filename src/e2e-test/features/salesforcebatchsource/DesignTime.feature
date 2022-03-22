@@ -16,9 +16,9 @@
 @SFBatchSource
 @Smoke
 @Regression
-Feature: Salesforce Batch Source - Design time scenarios
+Feature: Salesforce Batch Source - Design time Scenarios and Run time Scenarios
 
-  @BATCH-TS-SF-DSGN-07
+  @BATCH-TS-SF-DSGN-01
   Scenario Outline: Verify user should be able to get output schema for a valid SOQL query
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Batch"
@@ -26,7 +26,7 @@ Feature: Salesforce Batch Source - Design time scenarios
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And configure Salesforce source for an SOQL Query of type: "<QueryType>"
-    And click on the Get Schema button
+    And Click on the Get Schema button
     Then verify the Output Schema table for an SOQL query of type: "<QueryType>"
     Examples:
       | QueryType     |
@@ -34,16 +34,15 @@ Feature: Salesforce Batch Source - Design time scenarios
       | WHERE         |
       | CHILDTOPARENT |
 
-  @BATCH-TS-SF-DSGN-09
+  @BATCH-TS-SF-DSGN-02
   Scenario Outline: Verify user should be able to get output schema for a valid SObject Name
     When Open Datafusion Project to configure pipeline
-    And Select data pipeline type as 'Data Pipeline - Batch'
-    And Select plugin: "Salesforce" from the plugins list
+    And Select data pipeline type as: "Batch"
+    And Select plugin: "Salesforce" from the plugins list as: "Source"
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And configure Salesforce source for an SObject Query of SObject: "<SObjectName>"
-    And click on the Validate button
-    Then verify No errors found success message
+    Then Validate "Salesforce" plugin properties
     And verify the Output Schema table for an SObject Query of SObject: "<SObjectName>"
     Examples:
       | SObjectName |
@@ -53,7 +52,7 @@ Feature: Salesforce Batch Source - Design time scenarios
       | LEAD        |
 
 
-  @BATCH-TS-SF-DSGN-10
+  @BATCH-TS-SF-RNTM-09
   Scenario Outline: Verify user should be able to preview and run pipeline
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Batch"
@@ -61,9 +60,8 @@ Feature: Salesforce Batch Source - Design time scenarios
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And configure Salesforce source for an SObject Query of SObject: "<SObjectName>"
-    And fill Last modified After and before
-    And click on the Validate button
-    And verify No errors found success message
+    And fill Last modified After in format: yyyy-MM-ddThh:mm:ssZ: "lastmodified.after"
+    Then Validate "Salesforce" plugin properties
     And Capture the generated Output Schema
     And Close the Plugin Properties Page
     And Select Sink plugin: "BigQueryTable" from the plugins list
@@ -72,23 +70,23 @@ Feature: Salesforce Batch Source - Design time scenarios
     And fill Dataset name
     And fill Table name
     And fill the ProjectID
-    And fill the Service Account File path
-    And click on the Validate button
-    And verify No errors found success message
+    And fill the Service Account Json
+    Then Validate "BigQuery" plugin properties
     And Close the Plugin Properties Page
     And Connect source as "Salesforce" and sink as "BigQueryTable" to establish connection
     And Save the pipeline
     And Preview and run the pipeline
     And Verify the preview of pipeline is "successfully"
-    And click on sink plugin preview data
-    And Verify preview output schema matches the outputSchema captured in properties
+    # And click on preview data of sink: "BigQuery"
+    And Verify sink plugin's Preview Data for Input Records table and the Input Schema matches the Output Schema of Source plugin
+    # And Verify preview output schema matches the outputSchema captured in properties
     Examples:
       | SObjectName |
       | LEAD        |
 
 
 
-  @BATCH-TS-SF-DSGN-11
+  @BATCH-TS-SF-RNTM-10
   Scenario Outline: Verify user should be able to run and deploy pipeline
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Batch"
@@ -96,9 +94,8 @@ Feature: Salesforce Batch Source - Design time scenarios
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And configure Salesforce source for an SObject Query of SObject: "<SObjectName>"
-    And fill Last modified After and before
-    And click on the Validate button
-    And verify No errors found success message
+    And fill Last modified After in format: yyyy-MM-ddThh:mm:ssZ: "lastmodified.after"
+    Then Validate "Salesforce" plugin properties
     And Capture the generated Output Schema
     And Close the Plugin Properties Page
     And Select Sink plugin: "BigQueryTable" from the plugins list
@@ -107,9 +104,8 @@ Feature: Salesforce Batch Source - Design time scenarios
     And fill Dataset name
     And fill Table name
     And fill the ProjectID
-    And fill the Service Account File path
-    And click on the Validate button
-    And verify No errors found success message
+    And fill the Service Account Json
+    Then Validate "BigQuery" plugin properties
     And Close the Plugin Properties Page
     And Connect source as "Salesforce" and sink as "BigQueryTable" to establish connection
     And Save and Deploy Pipeline

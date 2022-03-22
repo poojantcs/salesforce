@@ -13,16 +13,19 @@
 # the License.
 
 @SalesforceSalesCloud
+@SFSink
+@Smoke
 @Regression
 Feature: Salesforce Streaming Source - Design time - validation scenarios
 
-  @BATCH-TS-SF-DSGN-4
+  @Streaming-TS-SF-DSGN-ERROR-12
   Scenario: Verify required fields missing validation for 'Topic name' property
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"
-    And Select plugin: "Salesforce" from the plugins list as: "Source"
+    And Select Realtime Source plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Reference Name property
-    And click on the Validate button
-    Then verify required fields missing validation message for Topic Name property
+    And fill Authentication properties for Salesforce Admin user
+    And Click on the Validate button
+    Then Verify that the Plugin Property: "pushTopicName" is displaying an in-line error message: "required.property.topicname"
 

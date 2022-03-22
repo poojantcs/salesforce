@@ -13,49 +13,52 @@
 # the License.
 
 @SalesforceSalesCloud
+@SFStreamingSource
+@Smoke
 @Regression
 Feature: Salesforce Sink - Design time - validation scenarios
 
-  @BATCH-TS-SF-DSGN-06
-  Scenario: Verify required fields missing validation for 'Topic name' property
+  @Sink-TS-SF-DSGN-ERROR-09
+  Scenario: Verify validation message for providing an invalid SObject Name
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Batch"
     And Select Sink plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Reference Name property
-    And click on the Validate button
-    Then verify required fields missing validation message for Sobject Name property
+    And fill Authentication properties for Salesforce Admin user
+    And fill SObject Name property in Sink with an invalid value
+    And Click on the Validate button
+    Then Verify that the Plugin is displaying an error message: "invalidsink.sobjectname.error" on the header
 
 
-  @BATCH-TS-SF-DSGN-07
+
+  @Sink-TS-SF-DSGN-ERROR-10
   Scenario Outline: Verify validation message for invalid Max Records Per Batch
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Batch"
     And Select Sink plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
-    And fill Reference Name property
     And fill Authentication properties for Salesforce Admin user
     And configure Salesforce sink for an SobjectName: "<SObjectName>"
-    And fill invalid max records per batch
-    And click on the Validate button
-    Then verify validation message for invalid Max Records Per Batch
+    And fill max Records Per Batch as: "1000000"
+    And Click on the Validate button
+    And Verify that the Plugin Property: "maxRecordsPerBatch" is displaying an in-line error message: "invalid.maxrecords"
     Examples:
       | SObjectName |
       | LEAD        |
 
 
-  @BATCH-TS-SF-DSGN-08
+  @Sink-TS-SF-DSGN-ERROR-11
   Scenario Outline: Verify validation message for invalid Max Bytes Per Batch
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Batch"
     And Select Sink plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
-    And fill Reference Name property
     And fill Authentication properties for Salesforce Admin user
     And configure Salesforce sink for an SobjectName: "<SObjectName>"
-    And fill invalid max Bytes per batch
-    And click on the Validate button
-    Then verify validation message for invalid Max Bytes Per Batch
+    And fill max Bytes Per Batch as: "1000000000"
+    And Click on the Validate button
+    And Verify that the Plugin Property: "maxBytesPerBatch" is displaying an in-line error message: "invalid.maxbytes"
     Examples:
       | SObjectName |
       | LEAD        |

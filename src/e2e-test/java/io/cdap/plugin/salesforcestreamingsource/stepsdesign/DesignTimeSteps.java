@@ -19,8 +19,6 @@ import io.cdap.plugin.salesforce.plugin.source.streaming.SalesforceStreamingSour
 import io.cdap.plugin.salesforcestreamingsource.actions.SalesforcePropertiesPageActions;
 import io.cdap.plugin.utils.enums.NotifyOptions;
 import io.cdap.plugin.utils.enums.SOQLQueryType;
-import io.cdap.plugin.utils.enums.SalesforceBatchSourceProperty;
-import io.cdap.plugin.utils.enums.SalesforceStreamingSourceProperty;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -65,10 +63,4 @@ public class DesignTimeSteps {
                (SOQLQueryType.valueOf(pushTopicQueryType));
     }
 
-    @Then("verify required fields missing validation message for Topic Name property")
-    public void verifyRequiredFieldsMissingValidationMessageForTopicNameProperty() {
-        SalesforcePropertiesPageActions.verifyRequiredFieldsMissingValidationMessage(
-                SalesforceStreamingSourceProperty.TOPIC_NAME);
-
-    }
 }

@@ -18,8 +18,6 @@ package io.cdap.plugin.salesforcestreamingsource.locators;
 
 import io.cdap.e2e.utils.SeleniumDriver;
 import io.cdap.plugin.salesforce.plugin.source.streaming.SalesforceStreamingSource;
-import io.cdap.plugin.utils.enums.SalesforceBatchSourceProperty;
-import io.cdap.plugin.utils.enums.SalesforceStreamingSourceProperty;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -82,12 +80,6 @@ public class SalesforcePropertiesPage {
     @FindBy(how = How.XPATH, using = "//div[@data-cy='select-pushTopicNotifyForFields']")
     public static WebElement notifyForFieldsDropdown;
 
-    @FindBy(how = How.XPATH, using = "//button[contains(@class, 'validate-btn')]")
-    public static WebElement validateButton;
-
-    @FindBy(how = How.XPATH, using = "//button[contains(@class, 'validate-btn')]//span[contains(@class, 'fa-spin')]")
-    public static WebElement loadingSpinnerOnValidateButton;
-
 
     public static WebElement getDropdownOptionElement(String option) {
         String xpath = "//li[@data-cy='option-" + option + "']";
@@ -98,11 +90,5 @@ public class SalesforcePropertiesPage {
     @FindBy(how = How.XPATH, using = "//input[@data-cy='sObjectName']")
     public static WebElement sObjectNameInput;
 
-
-    public static WebElement getPropertyInlineErrorMessage(SalesforceStreamingSourceProperty propertyName) {
-        String xpath = "//div[@data-cy='" + propertyName.dataCyAttributeValue + "']" +
-                "/following-sibling::div[contains(@class, 'propertyError')]";
-        return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
-    }
 
 }

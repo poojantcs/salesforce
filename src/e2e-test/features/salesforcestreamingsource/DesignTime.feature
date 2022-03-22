@@ -13,15 +13,16 @@
 # the License.
 
 @SalesforceSalesCloud
+@SFSink
 @Smoke
 @Regression
 Feature: Salesforce Streaming Source - Design time scenarios
 
-  @Streaming-TS-SF-DSGN-01
-  Scenario: Verify user should be able to get output schema for a valid Topic name
+  @Streaming-TS-SF-DSGN-06
+  Scenario: Verify user should be able to successfully validate the source for valid Topic name
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"
-    And Select plugin: "Salesforce" from the plugins list as: "Source"
+    And Select Realtime Source plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And fill Topic Name as: "TopicName"
@@ -29,17 +30,15 @@ Feature: Salesforce Streaming Source - Design time scenarios
     And select option for notifyOnUpdate as DISABLED
     And select option for notifyOn Delete as ENABLED
     Then select option for notifyForFields as SELECT
-    And click on the Validate button
-    Then verify No errors found success message
+    Then Validate "Salesforce" plugin properties
 
 
 
-
-  @Streaming-TS-SF-DSGN-02
+  @Streaming-TS-SF-DSGN-07
   Scenario Outline: Verify user should be able to get output schema for a valid SObject Name
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"
-    And Select plugin: "Salesforce" from the plugins list as: "Source"
+    And Select Realtime Source plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And fill Topic Name as: "TopicName2"
@@ -47,21 +46,19 @@ Feature: Salesforce Streaming Source - Design time scenarios
     And select option for notifyOnCreate as ENABLED
     And select option for notifyOnUpdate as DISABLED
     And select option for notifyOn Delete as ENABLED
-    Then select option for notifyForFields as SELECT
-
-    And click on the Validate button
-    Then verify No errors found success message
+    And select option for notifyForFields as SELECT
+    Then Validate "Salesforce" plugin properties
     And verify the Output Schema table for an SObject Query of SObject: "<SObjectName>"
     Examples:
       | SObjectName |
       | ACCOUNT     |
       | OPPORTUNITY |
 
-  @Streaming-TS-SF-DSGN-03
+  @Streaming-TS-SF-DSGN-08
   Scenario Outline: Verify user should be able to get output schema for a valid Topic Query
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"
-    And Select plugin: "Salesforce" from the plugins list as: "Source"
+    And Select Realtime Source plugin: "Salesforce" from the plugins list
     And Navigate to the properties page of plugin: "Salesforce"
     And fill Authentication properties for Salesforce Admin user
     And fill Topic Name as: "TopicName3"
@@ -69,8 +66,8 @@ Feature: Salesforce Streaming Source - Design time scenarios
     And select option for notifyOnCreate as ENABLED
     And select option for notifyOnUpdate as DISABLED
     And select option for notifyOn Delete as ENABLED
-    Then select option for notifyForFields as SELECT
-
+    And select option for notifyForFields as SELECT
+    Then Validate "Salesforce" plugin properties
     Examples:
       | QueryType |
       | SIMPLE    |

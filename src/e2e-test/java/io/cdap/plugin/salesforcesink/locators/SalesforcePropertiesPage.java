@@ -17,8 +17,6 @@
 package io.cdap.plugin.salesforcesink.locators;
 
 import io.cdap.e2e.utils.SeleniumDriver;
-import io.cdap.plugin.utils.enums.SalesforceSinkProperty;
-import io.cdap.plugin.utils.enums.SalesforceStreamingSourceProperty;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -70,13 +68,6 @@ public class SalesforcePropertiesPage {
     @FindBy(how = How.XPATH, using = "//input[@data-cy='maxBytesPerBatch']")
     public static WebElement maxBytesPerBatchInput;
 
-    @FindBy(how = How.XPATH, using = "//button[contains(@class, 'validate-btn')]")
-    public static WebElement validateButton;
-
-    @FindBy(how = How.XPATH, using = "//button[contains(@class, 'validate-btn')]//span[contains(@class, 'fa-spin')]")
-    public static WebElement loadingSpinnerOnValidateButton;
-////div[@role='button']
-
     @FindBy(how = How.XPATH, using = "//div[@data-cy='select-errorHandling']")
     public static WebElement errordropdown;
 
@@ -84,20 +75,13 @@ public class SalesforcePropertiesPage {
     public static WebElement getOperationType(String operationOption) {
         String xpath = "//input[@name='operation' and @value='" + operationOption + "']";
         return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
-        //Pn : It can give path of insert,update,upsert when passed as string
-    }
+        }
 
     public static WebElement getErrorHandlingOptions(String option) {
         String xpath = "//li[@data-value='" + option + "']";
-
         return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
-    //You can select option Skip on error or Stop on error
+
     }
 
-    public static WebElement getPropertyInlineErrorMessage(SalesforceSinkProperty propertyName) {
-        String xpath = "//div[@data-cy='" + propertyName.dataCyAttributeValue + "']" +
-                "/following-sibling::div[contains(@class, 'propertyError')]";
-        return SeleniumDriver.getDriver().findElement(By.xpath(xpath));
-    }
 
 }
