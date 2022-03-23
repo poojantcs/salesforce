@@ -90,5 +90,9 @@ public class SalesforcePropertiesPage {
     @FindBy(how = How.XPATH, using = "//input[@data-cy='sObjectName']")
     public static WebElement sObjectNameInput;
 
+//For saving and running after adding Runtime Arguments
+    @FindBy(how = How.XPATH, using = "//*[contains(text(),'Save & Run')]")
+    public static WebElement saveAndRunButton;
+
 
 }

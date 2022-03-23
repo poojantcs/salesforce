@@ -194,37 +194,11 @@ public class SalesforcePropertiesPageActions {
   public static void clickOnClosePropertiesPageButton() {
     SalesforcePropertiesPage.closePropertiesPageButton.click();
   }
-
-  public static void fillDatasetInSink() {
-    String datasetName = "Dataset" + RandomStringUtils.randomAlphanumeric(7);
-    CdfBigQueryPropertiesActions.enterBigQueryDataset(datasetName);
-  }
-
-  public static void fillTabelName() {
-    String tabelName = "Tablename" + RandomStringUtils.randomAlphanumeric(7);
-    CdfBigQueryPropertiesActions.enterBigQueryTable(tabelName);
-  }
-
-  public static void fillProjectId() throws IOException {
-    String projectId = PluginPropertyUtils.pluginProp("sink.projectid");
-    CdfBigQueryPropertiesActions.enterProjectId(projectId);
-  }
-
-  public static void fillJson() throws IOException, InterruptedException {
-    //Created a new method in cdap repo which click on the json radio button and pass json properties
-
-    //CdfBigQueryPropertiesActions.enterAccountJson(json);
-  }
-
   public static void fillLastModifyAfter(String lastModifyafterLocation) {
     ElementHelper.clearElementValue(SalesforcePropertiesPage.lastModifiedAfterInput);
     ElementHelper.sendKeys(SalesforcePropertiesPage.lastModifiedAfterInput,
             PluginPropertyUtils.pluginProp(lastModifyafterLocation));
   }
-
-//  public static void openPluginPreviewdata(String sinkName) {
-//    CdfHelper.openSinkPluginPreviewData(sinkName);
-//  }
 
   public static void closePluginPropertiesPage() {
     CdfPluginPropertiesActions.clickCloseButton();

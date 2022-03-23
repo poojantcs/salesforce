@@ -13,12 +13,12 @@
 # the License.
 
 @SalesforceSalesCloud
-@SFSink
+@@SFStreamingSource
 @Smoke
 @Regression
 Feature: Salesforce Streaming Source - Design time - validation scenarios
 
-  @Streaming-TS-SF-DSGN-ERROR-12
+  @STREAMING-TS-SF-DSGN-ERROR-12
   Scenario: Verify required fields missing validation for 'Topic name' property
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"

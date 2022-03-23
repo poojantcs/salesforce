@@ -45,9 +45,9 @@ String invalidsObjectName = "abcdef";
         SalesforcePropertiesPageActions.selectErrorHandlingOptionType(option.value);
     }
 
-    @Then("then select operation type as {}")
-    public void selectOperationType(OperationTypes operationType) {
-        SalesforcePropertiesPageActions.selectOperationType(operationType.value);
+    @Then("then select operation type as {string}")
+    public void selectOperationType(String operationType) {
+        SalesforcePropertiesPageActions.selectOperationType(OperationTypes.valueOf(operationType));
 
     }
 

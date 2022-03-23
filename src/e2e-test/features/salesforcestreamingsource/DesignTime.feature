@@ -13,12 +13,12 @@
 # the License.
 
 @SalesforceSalesCloud
-@SFSink
+@@SFStreamingSource
 @Smoke
 @Regression
 Feature: Salesforce Streaming Source - Design time scenarios
 
-  @Streaming-TS-SF-DSGN-06
+  @STREAMING-TS-SF-DSGN-06
   Scenario: Verify user should be able to successfully validate the source for valid Topic name
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"
@@ -34,7 +34,7 @@ Feature: Salesforce Streaming Source - Design time scenarios
 
 
 
-  @Streaming-TS-SF-DSGN-07
+  @STREAMING-TS-SF-DSGN-07
   Scenario Outline: Verify user should be able to get output schema for a valid SObject Name
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"
@@ -54,7 +54,7 @@ Feature: Salesforce Streaming Source - Design time scenarios
       | ACCOUNT     |
       | OPPORTUNITY |
 
-  @Streaming-TS-SF-DSGN-08
+  @STREAMING-TS-SF-DSGN-08
   Scenario Outline: Verify user should be able to get output schema for a valid Topic Query
     When Open Datafusion Project to configure pipeline
     And Select data pipeline type as: "Realtime"

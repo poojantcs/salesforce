@@ -24,7 +24,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 
 /**
- * Salesforce source plugins - Actions.
+ * Salesforce Streaming source plugins - Actions.
  */
 public class SalesforcePropertiesPageActions {
 
@@ -74,6 +74,9 @@ public class SalesforcePropertiesPageActions {
         ElementHelper.selectDropdownOption(SalesforcePropertiesPage.notifyForFieldsDropdown, forFieldOption);
     }
 
+    public static void clickSaveAndRunButton() {
+        SalesforcePropertiesPage.saveAndRunButton.click();
+    }
 }
 
 

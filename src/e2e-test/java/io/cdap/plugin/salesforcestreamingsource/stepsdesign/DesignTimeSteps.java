@@ -15,17 +15,15 @@
  */
 
 package io.cdap.plugin.salesforcestreamingsource.stepsdesign;
-import io.cdap.plugin.salesforce.plugin.source.streaming.SalesforceStreamingSource;
 import io.cdap.plugin.salesforcestreamingsource.actions.SalesforcePropertiesPageActions;
 import io.cdap.plugin.utils.enums.NotifyOptions;
 import io.cdap.plugin.utils.enums.SOQLQueryType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 
 
 /**
- * Design-time steps of Salesforce plugins.
+ * Design-time steps of Salesforce Streaming plugins.
  */
 public class DesignTimeSteps {
 
@@ -61,6 +59,11 @@ public class DesignTimeSteps {
     public void configureSalesforceSourceForPushTopicQuery(String pushTopicQueryType) {
        SalesforcePropertiesPageActions.configureSalesforcePluginForPushTopicQuery
                (SOQLQueryType.valueOf(pushTopicQueryType));
+    }
+//change
+    @And("Click on Save and Run button")
+    public void clickOnSaveAndRunButton() {
+        SalesforcePropertiesPageActions.clickSaveAndRunButton();
     }
 
 }

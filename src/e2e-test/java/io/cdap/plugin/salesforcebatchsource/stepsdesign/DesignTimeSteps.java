@@ -90,36 +90,11 @@ public class DesignTimeSteps implements CdfHelper {
     SalesforcePropertiesPageActions.fillSObjectName(invalidSobjectName);
   }
 
-  @And("fill Dataset name")
-  public void fillDatasetNameAs() {
-    SalesforcePropertiesPageActions.fillDatasetInSink();
-  }
-
-  @And("fill Table name")
-  public void fillTableNameAs() {
-    SalesforcePropertiesPageActions.fillTabelName();
-  }
-
   @And("Close the Plugin Properties Page")
   public void closeThePluginPropertiesPage() {
     SalesforcePropertiesPageActions.closePluginPropertiesPage();
   }
 
-  @And("fill the ProjectID")
-  public void fillTheProjectID() throws IOException {
-    SalesforcePropertiesPageActions.fillProjectId();
-  }
-
-  @And("fill the Service Account Json")
-  public void fillServiceAccountFilePath() throws IOException, InterruptedException {
-    SalesforcePropertiesPageActions.fillJson();
-  }
-
-  @And("click on preview data of sink: {string}")
-  public void openSinkPluginPreviewData(String sinkName) {
-    //SalesforcePropertiesPageActions.openPluginPreviewdata(sinkName);
-
-  }
 
   @And("fill Last modified After in format: yyyy-MM-ddThh:mm:ssZ: {string}")
   public void fillLastModifiedAfterInFormatYyyyMMDdThhMmSsZ(String lastModifiedAfterLocation) {

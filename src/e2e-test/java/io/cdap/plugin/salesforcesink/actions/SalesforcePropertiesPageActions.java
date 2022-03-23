@@ -24,6 +24,7 @@ import io.cdap.plugin.utils.enums.ErrorHandlingOptions;
 import io.cdap.plugin.utils.enums.OperationTypes;
 import io.cdap.plugin.utils.enums.SObjects;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
 
 /**
  * Salesforce sink plugins - Actions.
@@ -52,9 +53,9 @@ public class SalesforcePropertiesPageActions {
 
     }
 
-    public static void selectOperationType(String operationType) {
-        SalesforcePropertiesPage.getOperationType(operationType).click();
-        fillUpsertExternalIDIfOperationTypeISUpsert(operationType);
+    public static void selectOperationType(OperationTypes operationType) {
+        SalesforcePropertiesPage.getOperationType(operationType.value).click();
+        fillUpsertExternalIDIfOperationTypeISUpsert(operationType.value);
     }
 
     public static void fillUpsertExternalIDIfOperationTypeISUpsert(String operationType) {
@@ -67,7 +68,7 @@ public class SalesforcePropertiesPageActions {
         String externalId = PluginPropertyUtils.pluginProp("upsert.externalId");
         ElementHelper.sendKeys(SalesforcePropertiesPage.upsertExternalIdFieldInput, externalId);
     }
-
+//This function was working before it was talking an enum and passing it but now its expecting a web element
     public static void selectErrorHandlingOptionType(String errorOption) {
         ElementHelper.selectDropdownOption(SalesforcePropertiesPage.errordropdown, errorOption);
     }
